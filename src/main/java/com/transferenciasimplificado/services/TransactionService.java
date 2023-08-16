@@ -11,18 +11,21 @@ import com.transferenciasimplificado.dtos.TransactionDTO;
 import com.transferenciasimplificado.repositories.TransactionRepository;
 
 @Service
-public class TransferenceService {
+public class TransactionService {
 
 	@Autowired
 	UserService userService;
 	
 	@Autowired
+	NotificationService notificationService;
+	
+	@Autowired
 	private TransactionRepository repository;
 	
 	
-	public void createTransaction(TransactionDTO transaction) throws Exception {
-		User sender = userService.findUserById(transaction.senderId());
-		User receiver = userService.findUserById(transaction.receiverId());
+	public Transaction createTransaction(TransactionDTO transaction) throws Exception {
+		User sender = userService.findById(transaction.senderId());
+		User receiver = userService.findById(transaction.receiverId());
 		
 		userService.validateTransaction(sender, transaction.value());
 		
@@ -38,5 +41,11 @@ public class TransferenceService {
 		repository.save(newTransaction);
 		userService.saveUser(sender);
 		userService.saveUser(receiver);
+		
+//		notificationService.sendNotification(sender, "Transação realizada com sucesso");
+//		notificationService.sendNotification(receiver, "Transação recebida com sucesso");
+		
+		return newTransaction;
+		
 	}
 }

@@ -3,6 +3,8 @@ package com.transferenciasimplificado.domain;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import com.transferenciasimplificado.dtos.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,6 +51,16 @@ public class User {
 		this.roleUser = roleUser;
 	}
 
+	public User(UserDTO data) {
+		this.fristName = data.fristName();
+		this.lastName = data.lastName();
+		this.document = data.document();
+		this.email = data.email();
+		this.password = data.password();
+		this.balance = data.balance();
+		this.roleUser = data.roleUser();
+	}
+	
 	public Long getId() {
 		return id;
 	}

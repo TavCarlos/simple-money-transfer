@@ -8,7 +8,6 @@ import com.transferenciasimplificado.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	Optional<User> findUserByDocument(String document);
+	Optional<User> findByDocument(String document);
 	
-	Optional<User> findUserById(Long id);
 }

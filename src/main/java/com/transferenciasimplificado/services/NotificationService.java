@@ -26,5 +26,4 @@ public class NotificationService {
 			throw new Exception("Erro ao enviar notificação");
 		}
 	}
-	
 }
