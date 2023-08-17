@@ -1,6 +1,7 @@
 package com.transferenciasimplificado.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class TransactionService {
 	private TransactionRepository repository;
 	
 	
-	public Transaction createTransaction(TransactionDTO transaction) throws Exception {
+	public Transaction createTransaction(TransactionDTO transaction) {
 		User sender = userService.findById(transaction.senderId());
 		User receiver = userService.findById(transaction.receiverId());
 		
@@ -46,6 +47,11 @@ public class TransactionService {
 //		notificationService.sendNotification(receiver, "Transação recebida com sucesso");
 		
 		return newTransaction;
-		
+	}
+	
+	
+	public List<Transaction> getAllTransactions(){
+		List<Transaction> transactions = repository.findAll();
+		return transactions;
 	}
 }

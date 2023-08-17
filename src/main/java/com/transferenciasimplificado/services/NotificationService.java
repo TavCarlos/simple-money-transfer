@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.transferenciasimplificado.domain.User;
 import com.transferenciasimplificado.dtos.NotificationDTO;
+import com.transferenciasimplificado.services.exceptions.NotificationNotSentException;
 
 @Service
 public class NotificationService {
@@ -22,8 +23,8 @@ public class NotificationService {
 		ResponseEntity<String> notificationResponse = 
 				restTemplate.postForEntity("http://o4d9z.mocklab.io/notify", notificationRequest, String.class);
 		
-		if(!(notificationResponse.getStatusCode() == HttpStatus.OK)) {
-			throw new Exception("Erro ao enviar notificação");
+		if(!(notificationResponse.getStatusCode() == HttpStatus.BAD_REQUEST)) {
+			throw new NotificationNotSentException("Erro ao enviar notificação");
 		}
 	}
 }
