@@ -11,7 +11,7 @@ import com.transferenciasimplificado.domain.UserType;
 import com.transferenciasimplificado.dtos.UserDTO;
 import com.transferenciasimplificado.repositories.UserRepository;
 import com.transferenciasimplificado.services.exceptions.InsufficientBalanceException;
-import com.transferenciasimplificado.services.exceptions.UserNotAuthorizedException;
+import com.transferenciasimplificado.services.exceptions.NotAuthorizedException;
 import com.transferenciasimplificado.services.exceptions.UserNotFoundException;
 
 @Service
@@ -23,7 +23,7 @@ public class UserService {
 	public void validateTransaction(User sender, BigDecimal amount) {
 		
 		if(sender.getRoleUser() == UserType.MERCHANT) {
-			throw new UserNotAuthorizedException("Usuário do tipo logista não está autorizado a realizar transações");
+			throw new NotAuthorizedException("Usuário do tipo logista não está autorizado a realizar transações");
 		}
 	
 		if(sender.getBalance().compareTo(amount) < 0) {

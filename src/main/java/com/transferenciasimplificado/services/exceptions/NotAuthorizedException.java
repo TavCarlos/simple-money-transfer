@@ -1,9 +1,9 @@
 package com.transferenciasimplificado.services.exceptions;
 
-public class UserNotAuthorizedException extends RuntimeException{
+public class NotAuthorizedException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 
-	public UserNotAuthorizedException(String msg) {
+	public NotAuthorizedException(String msg) {
 		super(msg);
 	}
 }

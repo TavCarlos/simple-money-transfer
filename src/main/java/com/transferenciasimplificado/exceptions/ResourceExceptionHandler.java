@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.transferenciasimplificado.services.exceptions.InsufficientBalanceException;
 import com.transferenciasimplificado.services.exceptions.NotificationNotSentException;
-import com.transferenciasimplificado.services.exceptions.UserNotAuthorizedException;
+import com.transferenciasimplificado.services.exceptions.NotAuthorizedException;
 import com.transferenciasimplificado.services.exceptions.UserNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,12 +28,12 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	
-	@ExceptionHandler(UserNotAuthorizedException.class)
-	public ResponseEntity<StandardError> UserNotAuthorizedException(UserNotAuthorizedException e, HttpServletRequest request){
+	@ExceptionHandler(NotAuthorizedException.class)
+	public ResponseEntity<StandardError> NotAuthorizedException(NotAuthorizedException e, HttpServletRequest request){
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(HttpStatus.FORBIDDEN.value());
-		err.setError("user not authorized");
+		err.setError("not authorized");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
@@ -43,11 +43,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> NotificationNotSent(NotificationNotSentException e, HttpServletRequest request){
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
-		err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		err.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
 		err.setError("notification sending error");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(err);
 	}
 
 	@ExceptionHandler(InsufficientBalanceException.class)
